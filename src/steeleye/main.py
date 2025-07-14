@@ -3,6 +3,7 @@ from pathlib import Path
 from .config import ESMA_URL
 from .downloader import Downloader
 from .parser import XMLParser
+from .storage import Storage
 
 logging.basicConfig(level=logging.INFO)
 
@@ -32,7 +33,6 @@ class Steeleye:
 
         if dltins_link:
             logging.info(f"DLTINS link found: {dltins_link}")
-            # Further processing can be done here, e.g., downloading the DLTINS file
         else:
             logging.warning("No DLTINS link found in the XML file.")
             return
@@ -52,6 +52,10 @@ class Steeleye:
         parser.convert_xml_to_csv(final_xml_path, csv_file_path)
 
         logging.info(f"CSV file created at: {csv_file_path}")
+
+        storage = Storage()
+        remote_uri = f"file:///{self.temp_dir.resolve()}/s3_bucket/output.csv"
+        storage.upload_file(csv_file_path, remote_uri)
         
 if __name__ == "__main__":
     steeleye = Steeleye()
