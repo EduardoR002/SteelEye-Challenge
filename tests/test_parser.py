@@ -28,6 +28,7 @@ FAKE_XML_CONTENT_WITHOUT_LINK = """
 </response>
 """
 
+
 def test_find_dltins_link_success(tmp_path: Path):
     """
     Test Success Case: DLTINS link exists.
@@ -53,6 +54,7 @@ def test_find_dltins_link_not_found(tmp_path: Path):
 
     assert link is None
 
+
 def test_extract_zip_file(tmp_path: Path):
     """
     Test Zip Extraction: Ensure the xml file is extracted correctly from the Zip File.
@@ -61,7 +63,7 @@ def test_extract_zip_file(tmp_path: Path):
     xml_content = b"<data>This is a test file.</data>"
     xml_filename = "test.xml"
 
-    with zipfile.ZipFile(zip_path, 'w') as zip_file:
+    with zipfile.ZipFile(zip_path, "w") as zip_file:
         zip_file.writestr(xml_filename, xml_content)
 
     parser = XMLParser()
@@ -71,6 +73,7 @@ def test_extract_zip_file(tmp_path: Path):
     assert extracted_file_path.exists()
     assert extracted_file_path.name == xml_filename
     assert extracted_file_path.read_bytes() == xml_content
+
 
 def test_convert_xml_to_csv(tmp_path: Path):
     """

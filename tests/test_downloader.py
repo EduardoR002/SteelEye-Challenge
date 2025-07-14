@@ -1,6 +1,7 @@
 from pathlib import Path
 from src.steeleye.downloader import Downloader
 
+
 def test_download_success(mocker, tmp_path: Path):
     """
     Test successful download of a file.
@@ -10,7 +11,7 @@ def test_download_success(mocker, tmp_path: Path):
     mock_response.status_code = 200
     mock_response.content = fake_xml_content
 
-    mocker.patch('requests.get', return_value=mock_response)
+    mocker.patch("requests.get", return_value=mock_response)
 
     output_file = tmp_path / "test_file.xml"
     test_url = "http://example.com/test_file.xml"

@@ -4,6 +4,7 @@ from lxml import etree
 import zipfile
 import pandas as pd
 
+
 class XMLParser:
     """
     Class responsible for parsing XML files.
@@ -13,6 +14,7 @@ class XMLParser:
         extract_xml_from_zip(zip_path: Path, extract_to: Path) -> Path | None
         convert_xml_to_csv(xml_path: Path, csv_path: Path) -> None
     """
+
     def find_dltins_link(self, xml_path: Path) -> str | None:
         """
         Analyze the XML file to find the DLTINS link.
@@ -31,7 +33,9 @@ class XMLParser:
         try:
             tree = etree.parse(str(xml_path))
             root = tree.getroot()
-            xpath_query = ".//doc[str[@name='file_type']='DLTINS']/str[@name='download_link']"
+            xpath_query = (
+                ".//doc[str[@name='file_type']='DLTINS']/str[@name='download_link']"
+            )
             found_elements = root.xpath(xpath_query)
 
             if found_elements:
@@ -46,8 +50,8 @@ class XMLParser:
             raise
         except Exception as e:
             logging.error(f"An error occurred while parsing {xml_path}: {e}")
-            raise 
-        
+            raise
+
     def extract_xml_from_zip(self, zip_path: Path, extract_to: Path) -> Path | None:
         """
         Extract XML file from a ZIP archive.
@@ -55,18 +59,18 @@ class XMLParser:
         Args:
             zip_path (Path): Path to the ZIP file.
             extract_to (Path): Directory to extract the XML file to.
-        
+
         Returns:
             Path | None: The path to the extracted XML file if successful, otherwise None.
-        
+
         Raises:
             zipfile.BadZipFile: If the ZIP file is not valid.
             Exception: For any other errors encountered during extraction.
         """
         logging.info(f"Extracting XML from ZIP file: {zip_path}")
         try:
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                xml_files = [f for f in zip_ref.namelist() if f.endswith('.xml')]
+            with zipfile.ZipFile(zip_path, "r") as zip_ref:
+                xml_files = [f for f in zip_ref.namelist() if f.endswith(".xml")]
                 if not xml_files:
                     logging.warning("No XML files found in the ZIP archive.")
                     return None
@@ -92,7 +96,7 @@ class XMLParser:
 
         Returns:
             None
-        
+
         Raises:
             etree.XMLSyntaxError: If the XML file is not well-formed.
             Exception: For any other errors encountered during conversion.
@@ -106,7 +110,7 @@ class XMLParser:
             "FinInstrmGnlAttrbts.ClssfctnTp",
             "FinInstrmGnlAttrbts.CmmdtyDerivInd",
             "FinInstrmGnlAttrbts.NtnlCcy",
-            "Issr"
+            "Issr",
         ]
 
         # Initialize a list to hold the data rows
@@ -116,22 +120,36 @@ class XMLParser:
         # The events parameter is set to 'end' to process elements after they are fully parsed
         # The tag parameter is set to the specific element we are interested in, # which is 'TermntdRcrd' in this case that contains the complete record
         # The namespace is specified to match the XML structure
-        context = etree.iterparse(str(xml_path), events=('end',), tag='{urn:iso:std:iso:20022:tech:xsd:auth.036.001.02}TermntdRcrd')
+        context = etree.iterparse(
+            str(xml_path),
+            events=("end",),
+            tag="{urn:iso:std:iso:20022:tech:xsd:auth.036.001.02}TermntdRcrd",
+        )
 
         for _, elem in context:
-            ns = {'esma': 'urn:iso:std:iso:20022:tech:xsd:auth.036.001.02'}
+            ns = {"esma": "urn:iso:std:iso:20022:tech:xsd:auth.036.001.02"}
 
             # Extract the relevant fields from the XML element
             # Using findtext with the namespace to get the text content of each field
             # The findtext method is used to retrieve the text content of the specified elements
             # If the element is not found, it returns None, which is handled by the default value of the dictionary
             row = {
-                "FinInstrmGnlAttrbts.Id": elem.findtext('.//esma:FinInstrmGnlAttrbts/esma:Id', namespaces=ns),
-                "FinInstrmGnlAttrbts.FullNm": elem.findtext('.//esma:FinInstrmGnlAttrbts/esma:FullNm', namespaces=ns),
-                "FinInstrmGnlAttrbts.ClssfctnTp": elem.findtext('.//esma:FinInstrmGnlAttrbts/esma:ClssfctnTp', namespaces=ns),
-                "FinInstrmGnlAttrbts.CmmdtyDerivInd": elem.findtext('.//esma:FinInstrmGnlAttrbts/esma:CmmdtyDerivInd', namespaces=ns),
-                "FinInstrmGnlAttrbts.NtnlCcy": elem.findtext('.//esma:FinInstrmGnlAttrbts/esma:NtnlCcy', namespaces=ns),
-                "Issr": elem.findtext('.//esma:Issr', namespaces=ns),
+                "FinInstrmGnlAttrbts.Id": elem.findtext(
+                    ".//esma:FinInstrmGnlAttrbts/esma:Id", namespaces=ns
+                ),
+                "FinInstrmGnlAttrbts.FullNm": elem.findtext(
+                    ".//esma:FinInstrmGnlAttrbts/esma:FullNm", namespaces=ns
+                ),
+                "FinInstrmGnlAttrbts.ClssfctnTp": elem.findtext(
+                    ".//esma:FinInstrmGnlAttrbts/esma:ClssfctnTp", namespaces=ns
+                ),
+                "FinInstrmGnlAttrbts.CmmdtyDerivInd": elem.findtext(
+                    ".//esma:FinInstrmGnlAttrbts/esma:CmmdtyDerivInd", namespaces=ns
+                ),
+                "FinInstrmGnlAttrbts.NtnlCcy": elem.findtext(
+                    ".//esma:FinInstrmGnlAttrbts/esma:NtnlCcy", namespaces=ns
+                ),
+                "Issr": elem.findtext(".//esma:Issr", namespaces=ns),
             }
             data_rows.append(row)
 
@@ -142,16 +160,19 @@ class XMLParser:
         if not data_rows:
             logging.warning("No data rows found in the XML file.")
             return
-        
 
         # Create a DataFrame from the collected data rows
         df = pd.DataFrame(data_rows, columns=headers)
 
         # Add a new column 'a_count' that counts occurrences of 'a' in 'FullNm'
-        df['a_count'] = df['FinInstrmGnlAttrbts.FullNm'].str.count('a').fillna(0).astype(int)
+        df["a_count"] = (
+            df["FinInstrmGnlAttrbts.FullNm"].str.count("a").fillna(0).astype(int)
+        )
 
         # Add a new column 'contains_a' that indicates if 'a_count' is greater than 0
-        df['contains_a'] = df['a_count'].apply(lambda count: "YES" if count > 0 else "NO")
+        df["contains_a"] = df["a_count"].apply(
+            lambda count: "YES" if count > 0 else "NO"
+        )
 
-        df.to_csv(csv_path, index=False, encoding='utf-8')
+        df.to_csv(csv_path, index=False, encoding="utf-8")
         logging.info(f"CSV file created at: {csv_path}")

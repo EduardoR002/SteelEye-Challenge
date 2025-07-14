@@ -1,6 +1,7 @@
-import logging # Regist what happens
-import requests # Tool for making HTTP requests
-from pathlib import Path # For handling file paths
+import logging  # Regist what happens
+import requests  # Tool for making HTTP requests
+from pathlib import Path  # For handling file paths
+
 
 class Downloader:
     """
@@ -8,7 +9,8 @@ class Downloader:
 
     Atributes:
         url (str): The URL of the file to be downloaded.
-    """ 
+    """
+
     def __init__(self, url: str):
         """
         Initializes the Downloader with a URL.
@@ -17,7 +19,7 @@ class Downloader:
             url (str): The URL of the file to be downloaded.
         """
         self.url = url
-        
+
         logging.info(f"Downloader initialized with URL: {self.url}")
 
     def download(self, output_path: Path) -> None:
@@ -29,7 +31,7 @@ class Downloader:
 
         Returns:
             None
-        
+
         Raises:
             requests.RequestException: If the download fails due to network issues or invalid URL.
             OSError: If there is an issue writing to the file system.
@@ -38,7 +40,7 @@ class Downloader:
             logging.info(f"Starting download from {self.url} to {output_path}")
             response = requests.get(self.url, timeout=30)
             response.raise_for_status()  # Raise an error for bad responses
-            with open(output_path, 'wb') as file:
+            with open(output_path, "wb") as file:
                 file.write(response.content)
             logging.info(f"Download completed successfully and stored in {output_path}")
         except requests.RequestException as e:
