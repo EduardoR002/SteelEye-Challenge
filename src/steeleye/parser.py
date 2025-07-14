@@ -1,12 +1,13 @@
 import logging
 from pathlib import Path
 from lxml import etree
+import zipfile
 
 class XMLParser:
     """
     Class responsible for parsing XML files.
     """
-    def find_dtlins_link(self, xml_path: Path) -> str | None:
+    def find_dltins_link(self, xml_path: Path) -> str | None:
         """
         Analyze the XML file to find the DLTINS link.
         """
@@ -31,3 +32,25 @@ class XMLParser:
             logging.error(f"An error occurred while parsing {xml_path}: {e}")
             raise 
         
+    def extract_xml_from_zip(self, zip_path: Path, extract_to: Path) -> Path | None:
+        """
+        Extract XML file from a ZIP archive.
+        """
+        logging.info(f"Extracting XML from ZIP file: {zip_path}")
+        try:
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                xml_files = [f for f in zip_ref.namelist() if f.endswith('.xml')]
+                if not xml_files:
+                    logging.warning("No XML files found in the ZIP archive.")
+                    return None
+                xml_file = xml_files[0]
+                zip_ref.extract(xml_file, extract_to)
+                extracted_path = extract_to / xml_file
+                logging.info(f"Extracted XML file to: {extracted_path}")
+                return extracted_path
+        except zipfile.BadZipFile as e:
+            logging.error(f"Bad ZIP file: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"An error occurred while extracting from ZIP: {e}")
+            raise
