@@ -7,10 +7,25 @@ import pandas as pd
 class XMLParser:
     """
     Class responsible for parsing XML files.
+
+    Methods:
+        find_dltins_link(xml_path: Path) -> str | None
+        extract_xml_from_zip(zip_path: Path, extract_to: Path) -> Path | None
+        convert_xml_to_csv(xml_path: Path, csv_path: Path) -> None
     """
     def find_dltins_link(self, xml_path: Path) -> str | None:
         """
         Analyze the XML file to find the DLTINS link.
+
+        Args:
+            xml_path (Path): Path to the XML file to parse.
+
+        Returns:
+            str | None: The DLTINS link if found, otherwise None.
+
+        Raises:
+            etree.XMLSyntaxError: If the XML file is not well-formed.
+            Exception: For any other errors encountered during parsing.
         """
         logging.info(f"Parsing XML file: {xml_path}")
         try:
@@ -36,6 +51,17 @@ class XMLParser:
     def extract_xml_from_zip(self, zip_path: Path, extract_to: Path) -> Path | None:
         """
         Extract XML file from a ZIP archive.
+
+        Args:
+            zip_path (Path): Path to the ZIP file.
+            extract_to (Path): Directory to extract the XML file to.
+        
+        Returns:
+            Path | None: The path to the extracted XML file if successful, otherwise None.
+        
+        Raises:
+            zipfile.BadZipFile: If the ZIP file is not valid.
+            Exception: For any other errors encountered during extraction.
         """
         logging.info(f"Extracting XML from ZIP file: {zip_path}")
         try:
@@ -59,6 +85,17 @@ class XMLParser:
     def convert_xml_to_csv(self, xml_path: Path, csv_path: Path) -> None:
         """
         Convert the wanted fields from XML to CSV format.
+
+        Args:
+            xml_path (Path): Path to the XML file to convert.
+            csv_path (Path): Path where the CSV file will be saved.
+
+        Returns:
+            None
+        
+        Raises:
+            etree.XMLSyntaxError: If the XML file is not well-formed.
+            Exception: For any other errors encountered during conversion.
         """
         logging.info(f"Converting XML file to CSV: {xml_path}")
 

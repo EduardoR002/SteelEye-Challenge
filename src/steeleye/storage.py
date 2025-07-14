@@ -4,14 +4,19 @@ import fsspec
 
 class Storage:
     """
-    Upload files to a remote storage system using fsspec.
+    This class provides a method to upload files from a local path to a specified remote URI.
+    It uses the fsspec library to handle various storage backends.
     """
     def upload_file(self, local_path: Path, remote_uri: str) -> None:
         """
         Upload a file from local_path to remote_uri.
         
-        :param local_path: Path to the local file to upload.
-        :param remote_uri: URI of the remote storage location.
+        Args:
+            local_path (Path): The local file path to upload.
+            remote_uri (str): The remote URI where the file should be uploaded.
+
+        Raises:
+            Exception: If the upload fails, an exception is raised with an error message.
         """
         logging.info(f"Uploading {local_path} to {remote_uri}")
         try:

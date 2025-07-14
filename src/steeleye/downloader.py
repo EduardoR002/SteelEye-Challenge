@@ -6,10 +6,16 @@ from .config import ESMA_URL # Importing the ESMA_URL from the config module
 class Downloader:
     """
     Class responsible for downloading files from the ESMA website.
+
+    Atributes:
+        url (str): The URL of the file to be downloaded.
     """ 
     def __init__(self, url: str):
         """
-        Everytime we create an instance of Downloader, we set the download path.
+        Initializes the Downloader with a URL.
+
+        Args:
+            url (str): The URL of the file to be downloaded.
         """
         self.url = url
         logging.info(f"Downloader initialized with URL: {self.url}")
@@ -17,6 +23,16 @@ class Downloader:
     def download(self, output_path: Path) -> None:
         """
         Downloads the file from the specified URL and saves it to the file.
+
+        Args:
+            output_path (Path): The path where the downloaded file will be saved.
+
+        Returns:
+            None
+        
+        Raises:
+            requests.RequestException: If the download fails due to network issues or invalid URL.
+            OSError: If there is an issue writing to the file system.
         """
         try:
             logging.info(f"Starting download from {self.url} to {output_path}")
