@@ -18,6 +18,7 @@ class Downloader:
             url (str): The URL of the file to be downloaded.
         """
         self.url = url
+        
         logging.info(f"Downloader initialized with URL: {self.url}")
 
     def download(self, output_path: Path) -> None:
