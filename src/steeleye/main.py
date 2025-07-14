@@ -48,6 +48,11 @@ class Steeleye:
             logging.error("No XML file found in the downloaded ZIP archive.")
             return
         
+        csv_file_path = self.temp_dir / "dltins.csv"
+        parser.convert_xml_to_csv(final_xml_path, csv_file_path)
+
+        logging.info(f"CSV file created at: {csv_file_path}")
+        
 if __name__ == "__main__":
     steeleye = Steeleye()
     steeleye.run()
