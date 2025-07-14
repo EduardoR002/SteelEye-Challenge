@@ -1,5 +1,4 @@
 from pathlib import Path
-import pytest
 from src.steeleye.downloader import Downloader
 
 def test_download_success(mocker, tmp_path: Path):

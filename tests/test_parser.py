@@ -1,8 +1,6 @@
 from pathlib import Path
-import pytest
 from src.steeleye.parser import XMLParser
 import zipfile
-import pandas as pd
 
 FAKE_XML_CONTENT_WITH_LINK = """
 <response>

@@ -1,7 +1,6 @@
 import logging # Regist what happens
 import requests # Tool for making HTTP requests
 from pathlib import Path # For handling file paths
-from .config import ESMA_URL # Importing the ESMA_URL from the config module
 
 class Downloader:
     """
