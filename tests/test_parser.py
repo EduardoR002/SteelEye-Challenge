@@ -2,6 +2,7 @@ from pathlib import Path
 import pytest
 from src.steeleye.parser import XMLParser
 import zipfile
+import pandas as pd
 
 FAKE_XML_CONTENT_WITH_LINK = """
 <response>
@@ -72,3 +73,8 @@ def test_extract_zip_file(tmp_path: Path):
     assert extracted_file_path.exists()
     assert extracted_file_path.name == xml_filename
     assert extracted_file_path.read_bytes() == xml_content
+
+def test_convert_xml_to_csv(tmp_path: Path):
+    """
+    Test XML to CSV Conversion: Ensure the XML content is converted to CSV format.
+    """
