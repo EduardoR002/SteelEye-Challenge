@@ -1,15 +1,16 @@
-.. SteelEye Challenge documentation master file, created by
-   sphinx-quickstart on Mon Jul 14 15:18:42 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 SteelEye Challenge documentation
 ================================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+Welcome to the SteelEye Challenge documentation!
 
+SteelEye Challenge is a Python project for downloading, parsing, and processing ESMA DLTINS data.
+
+Features:
+- Download and parse ESMA XML files
+
+- Extract and convert DLTINS data to CSV
+
+- Cloud-agnostic storage using fsspec
 
 .. toctree::
    :maxdepth: 2
@@ -17,4 +18,3 @@ documentation for details.
 
    modules
    steeleye
-
