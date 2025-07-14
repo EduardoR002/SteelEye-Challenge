@@ -4,7 +4,7 @@ This repository contains the solution for the **Data Engineer Technical Assessme
 
 ## 📋 Table of Contents
 
-- [About The Project](#-about-the-project)
+- [📖 About The Project](#-about-the-project)
 - [✨ Key Features](#-key-features)
 - [🛠️ Tech Stack](#️-tech-stack)
 - [🚀 Getting Started](#-getting-started)
@@ -32,11 +32,11 @@ The entire application is built using Object-Oriented principles to ensure the c
 
 -   **Dynamic Data Fetching**: Intelligently parses an initial source to find and download the target dataset.
 -   **Efficient XML Parsing**: Uses `lxml` for memory-efficient parsing of large XML files.
--   **Data Transformation with Pandas**: Leverages the Pandas library for robust data manipulation and the creation of new analytical columns[cite: 15, 37, 40].
--   **Cloud-Agnostic Storage**: Employs `fsspec` to seamlessly upload the final output to different cloud providers (AWS S3, Azure Blob)[cite: 42, 44].
+-   **Data Transformation with Pandas**: Leverages the Pandas library for robust data manipulation and the creation of new analytical columns.
+-   **Cloud-Agnostic Storage**: Employs `fsspec` to seamlessly upload the final output to different cloud providers (AWS S3, Azure Blob).
 -   **Robust & Maintainable Code**: Built with OOP principles, PEP8 standards, type hints, and detailed docstrings.
 -   **Comprehensive Testing**: Includes unit and integration tests with `pytest` to ensure reliability and correctness.
--   **Logging**: Implements standard logging for effective troubleshooting without using `print` statements[cite: 51].
+-   **Logging**: Implements standard logging for effective troubleshooting without using `print` statements.
 -   **Automated CI/CD**: Integrates GitHub Actions for continuous integration, automatically running tests and linters on every push and pull request.
 -   **Full Documentation**: Includes comprehensive documentation generated with Sphinx.
 
