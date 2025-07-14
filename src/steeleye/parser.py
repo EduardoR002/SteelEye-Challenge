@@ -111,7 +111,7 @@ class XMLParser:
         df = pd.DataFrame(data_rows, columns=headers)
 
         # Add a new column 'a_count' that counts occurrences of 'a' in 'FullNm'
-        df['a_count'] = df['FinInstrmGnlAttrbts.FullNm'].str.lower().str.count('a').fillna(0).astype(int)
+        df['a_count'] = df['FinInstrmGnlAttrbts.FullNm'].str.count('a').fillna(0).astype(int)
 
         # Add a new column 'contains_a' that indicates if 'a_count' is greater than 0
         df['contains_a'] = df['a_count'].apply(lambda count: "YES" if count > 0 else "NO")
