@@ -88,4 +88,29 @@ To get a local copy up and running, follow these simple steps.
 To run the entire data processing pipeline, execute the main module from the root directory:
 
 ```sh
-python -m src.steeleye.main
+poetry run python -m src.steeleye.main  
+```
+
+## 🧪 Testing
+
+The project has a suite of unit and integration tests. To run the tests, use:
+
+```sh
+poetry run pytest
+```
+
+## 📖 Documentation
+
+Comprehensive documentation is available and can be built using Sphinx.
+
+1. **Navigate to the docs directory**
+
+```sh
+cd docs
+```
+
+2. **Build the HTML documentation:**
+
+```sh
+.\make.bat html
+```
